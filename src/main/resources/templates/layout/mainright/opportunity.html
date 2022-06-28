@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{index}">
+
+<body>
+	<th:block layout:fragment="scripts">
+		<script type="text/javascript" src="/js/mainpage/opportunity.js"></script>
+	</th:block>
+
+	<div layout:fragment="main-right" class="main-right">
+		<div class="box">
+			<div class="main-top-content">
+				<div class="title-page">
+					<h3 class="main-page-title">
+						<span>Opportunity Management</span>
+						<i class="glyphicon glyphicon-plus hover-pointer ml-5" id="btnAddOpportunity" th:if="${#lists.contains(user_role, 'DM')
+						|| #lists.contains(user_role, 'PMO') || #lists.contains(user_role, 'PM')}"></i>
+					</h3>
+				</div>
+			</div>
+			<div class="middle-content">
+				<div class="search-form form-search-opportunity mb-5 mt-5">
+					<div class="row">
+						<form class="form-horizontal">
+							<div class="col-md-12">
+								<div class="col-md-3">
+									<div class="form-group">
+										<label class="control-label col-sm-4" for="opportunityName">Opportunity
+											Name</label>
+										<div class="col-sm-8">
+											<input type="text" class="form-control form-control__item field-search"
+												id="opportunityName" data-field="oppName"
+												placeholder="Opportunity Name">
+										</div>
+									</div>
+								</div>
+								<div class="col-md-3">
+									<div class="form-group">
+										<label class="control-label col-sm-4" for="contractType">Contract Type</label>
+										<div class="col-sm-8">
+											<select data-type="number" data-field="contractTypeId" id="rank"
+												class="form-control form-control__item form-search-control__contract-type"></select>
+										</div>
+									</div>
+								</div>
+								<div class="col-md-3">
+									<div class="form-group">
+										<label class="control-label col-sm-4" for="tempPm">Temporary PM</label>
+										<div class="col-sm-8">
+											<select data-type="number" data-field="tempPm" id="tempPm" name="tempPm"
+												class="form-control form-search-user form-control__item form-search-control__temp-pm combo-box-field"></select>
+										</div>
+									</div>
+								</div>
+								<div class="col-md-3">
+									<div class="form-group">
+										<label class="control-label col-sm-4" for="planPM">Planned PM</label>
+										<div class="col-sm-8">
+											<select data-type="number" data-field="planPm" id="planPm" name="planPm"
+												class="form-control form-search-user form-control__item form-search-control__plan-pm combo-box-field"></select>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="col-md-12 mt-2">
+								<div class="col-md-3">
+									<div class="form-group">
+										<label class="control-label col-sm-4" for="fromStartDate">From Start
+											Date</label>
+										<div class="col-sm-8">
+											<div class="input-group date" data-provide="datepicker">
+												<input data-field="fromStartDate" id="fromStartDate" placeholder="From Start Date"
+													type="text" class="form-control form-control__item field-search">
+												<div class="input-group-addon">
+													<span class="glyphicon glyphicon-th"></span>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="col-md-3">
+									<div class="form-group">
+										<label class="control-label col-sm-4" for="toStartDate">To Start Date</label>
+										<div class="col-sm-8">
+											<div class="input-group date" data-provide="datepicker">
+												<input data-field="toStartDate" id="toStartDate" placeholder="To Start Date" type="text"
+													class="form-control form-control__item field-search">
+												<div class="input-group-addon">
+													<span class="glyphicon glyphicon-th"></span>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="col-md-3">
+									<div class="form-group">
+										<label class="control-label col-sm-4" for="fromEndDate">From End Date</label>
+										<div class="col-sm-8">
+											<div class="input-group date" data-provide="datepicker">
+												<input data-field="fromEndDate" id="fromEndDate" placeholder="From End Date" type="text"
+													class="form-control form-control__item field-search">
+												<div class="input-group-addon">
+													<span class="glyphicon glyphicon-th"></span>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="col-md-3">
+									<div class="form-group">
+										<label class="control-label col-sm-4" for="toEndDate">To End Date</label>
+										<div class="col-sm-8">
+											<div class="input-group date" data-provide="datepicker">
+												<input data-field="toEndDate" id="toEndDate" placeholder="To End Date" type="text"
+													class="form-control form-control__item field-search">
+												<div class="input-group-addon">
+													<span class="glyphicon glyphicon-th"></span>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="col-md-12 mt-2">
+								<div class="col-md-12 mt-3">
+									<div class="form-group">
+										<label class="control-label col-sm-1" for="">Status</label>
+										<div class="col-sm-11" id="form-control__item--status"></div>
+									</div>
+								</div>
+							</div>
+							<div class="col-md-12 mt-3" th:if="${#lists.contains(user_role, 'DM') || #lists.contains(user_role, 'PMO') || #lists.contains(user_role, 'DIR')}">
+								<div class="col-md-12 mt-3">
+									<div class="text-right">
+										<button class="btn btn-primary" type="button"
+											id="btnSearchOpportunity">Search</button>
+										<button class="btn btn-primary" type="button"
+												id="btnResetSearchOpportunity">Reset</button>
+									</div>
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+				<div>
+					<table id="tableOpportunity" class="table table-responsive table-striped"></table>
+				</div>
+			</div>
+			<div class="modal fade in" id="modalActionOpportunity" tabindex="-1" role="dialog" data-toggle="modal"
+				aria-hidden="false" data-backdrop="static">
+				<div class="modal-dialog modal-lg" role="document">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h4 class="modal-title">Create Opportunity</h4>
+							<i class="glyphicon glyphicon-remove close" data-dismiss="modal" aria-label="Close"></i>
+						</div>
+						<div class="modal-body" id="modal-body">
+							<form class="formActionOpportunity">
+								<div class="row">
+									<div class="col-md-12">
+										<div class="form-group">
+											<label for="">Opportunity Code</label>
+											<input type="text" data-field="oppCode"
+												class="form-control field-opportunity__opportunity-code form-control__item"
+												placeholder="Opportunity Code" disabled>
+										</div>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-md-6">
+										<div class="form-group">
+											<label>Opportunity Name<span class="text-red ml-1">(*)</span></label>
+											<div class="input-group">
+												<span class="input-group-addon">Opp_</span>
+												<input type="text" required maxlength="200" data-field="oppName"
+													class="field-opportunity__opportunity-name form-control form-control__item"
+													name="oppName" placeholder="Opportunity Name" value="">
+											</div>
+										</div>
+									</div>
+									<div class="col-md-6">
+										<div class="form-group">
+											<label>Contract Type<span class="text-red ml-1">(*)</span></label>
+											<select required data-field="contractTypeId" name="contractTypeId"
+												class="form-control field-opportunity__contract-type form-control__item"></select>
+										</div>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-md-6">
+										<div class="form-group">
+											<label for="">MM</label>
+											<input type="number" data-field="mm" name="mm"
+												class="field-opportunity__mm form-control form-control__item"
+												placeholder="MM" value="">
+										</div>
+									</div>
+									<div class="col-md-6">
+										<div class="form-group">
+											<label for="">Duration (month)</label>
+											<input type="number" data-field="duration" name="duration"
+												class="field-opportunity__duration form-control form-control__item"
+												placeholder="Duration" value="" disabled>
+										</div>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-md-6">
+										<div class="form-group">
+											<label>Start Plan Date</label>
+											<input data-field="startDate" data-provide="datepicker"
+												name="startDate" type="text"
+												class="form-control field-opportunity__date field-opportunity__start-date form-control__item"
+                                                placeholder="Start Plan Date">
+											<span id="endDate-error-minDate" class="text-red d-none" for="endDate">Start
+												Plan Date > End Plan Date.</span>
+										</div>
+									</div>
+									<div class="col-md-6">
+										<div class="form-group">
+											<label>End Plan Date</label>
+											<input data-field="endDate" data-provide="datepicker"
+												name="endDate" type="text"
+												class="form-control field-opportunity__date field-opportunity__end-date form-control__item"
+                                                   placeholder="End Plan Date">
+										</div>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-md-6">
+										<div class="form-group">
+											<label for="">Total MM</span></label>
+											<input type="number" data-field="totalMm" name="totalMm"
+												class="field-opportunity__total-mm form-control form-control__item"
+												placeholder="Total MM" value="">
+										</div>
+									</div>
+									<div class="col-md-6">
+										<div class="form-group">
+											<label for="">Success Rate</label>
+											<input type="number" min="0" max="100" data-field="successRate"
+												name="successRate"
+												class="field-opportunity__success-rate form-control form-control__item"
+												placeholder="Success Rate" value="">
+										</div>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-md-6">
+										<div class="form-group">
+											<label for="">Temporary PM</label>
+											<select data-field="tempPmId" name="tempPmId"
+												class="field-opportunity__temp-pm field-opportunity__user form-control form-control__item"></select>
+										</div>
+									</div>
+									<div class="col-md-6">
+										<div class="form-group">
+											<label for="">Planned PM</label>
+											<select data-field="planPmId" name="planPmId"
+												class="field-opportunity__plan-pm field-opportunity__user form-control form-control__item"></select>
+										</div>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-md-6">
+										<div class="form-group">
+											<label for="">Status <span class="text-red ml-1">(*)</span></label>
+											<div class="form-control__status"></div>
+											<label for=""
+												class="form-control__status-error text-red font-weight-normal mt-1">Please
+												select Status.</label>
+										</div>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-md-12">
+										<div class="form-group">
+											<label for="">Overview</label>
+											<textarea rows="5" data-field="overview" name="overview"
+												class="field-opportunity__overview form-control form-control__item"
+												placeholder="Overview"></textarea>
+										</div>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-md-12">
+										<div class="form-group">
+											<label for="">Note</label>
+											<textarea rows="5" data-field="note" name="note"
+												class="field-opportunity__note form-control form-control__item"
+												placeholder="Note"></textarea>
+										</div>
+									</div>
+								</div>
+								<div class="text-right">
+									<button type="button" class="btnAddOpportunity btn btn-primary mr-5" th:if="${#lists.contains(user_role, 'DM') || #lists.contains(user_role, 'PMO')}">Save</button>
+									<button type="button"
+										class="btnEditOpportunity btn btn-primary mr-5" th:if="${#lists.contains(user_role, 'DM') || #lists.contains(user_role, 'PMO') || #lists.contains(user_role, 'PM')}">Update</button>
+									<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="modal fade in" id="modalOpportunityToProject" tabindex="-1" role="dialog" data-toggle="modal"
+				aria-hidden="false" data-backdrop="static">
+				<div class="modal-dialog modal-lg" role="document">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h4 class="modal-title">Transfer from Opportunity to Project</h4>
+							<i class="glyphicon glyphicon-remove close" data-dismiss="modal" aria-label="Close"></i>
+						</div>
+						<div class="modal-body" id="modal-body">
+							<form class="formOpportunityToProject">
+								<div class="row">
+									<div class="col-md-12">
+										<div class="form-group">
+											<input type="hidden" data-field="oppId"
+												class="form-control field-project__opportunity-id form-control__item"
+												disabled>
+										</div>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-md-6">
+										<div class="form-group">
+											<label>Opportunity Name</label>
+											<input type="text"
+												class="field-project__opportunity-name form-control form-control__item"
+												name="oppName" placeholder="Opportunity Name" value="" disabled>
+										</div>
+									</div>
+									<div class="col-md-6">
+										<div class="form-group">
+											<label>Contract Type<span class="text-red ml-1">(*)</span></label>
+											<select required data-type="number" data-field="contractTypeId"
+												name="contractTypeId"
+												class="form-control field-project__contract-type form-control__item"></select>
+										</div>
+									</div>
+								</div>
+								<!-- projectName & renewContract -->
+								<div class="row">
+									<div class="col-md-6">
+										<div class="form-group">
+											<label>Project Name <span class="text-red ml-1">(*)</span></label>
+											<input type="text" required data-field="projectName"
+												class="field-project__project-name form-control form-control__item"
+												name="projectName" placeholder="Project Name" value="">
+										</div>
+									</div>
+									<div class="col-md-6">
+										<div class="form-group">
+											<label>Renew contract</label>
+											<input data-field="renewContract" data-provide="datepicker"
+												name="renewContract" placeholder="Renew contract" type="text"
+												class="form-control field-project__date field-project__renew-contract form-control__item">
+										</div>
+									</div>
+								</div>
+								<!-- startDate & endDate -->
+								<div class="row">
+									<div class="col-md-6">
+										<div class="form-group">
+											<label>Start Plan Date<span class="text-red ml-1">(*)</span></label>
+											<input required data-field="startDate" data-provide="datepicker"
+												name="startDate" placeholder="Start Plan Date" type="text"
+												class="form-control field-project__date field-project__start-date form-control__item">
+											<span id="startDate-error-minDate" class="text-red d-none"
+												for="startDate">Start Plan Date > End Plan Date.</span>
+										</div>
+									</div>
+									<div class="col-md-6">
+										<div class="form-group">
+											<label>End Plan Date <span class="text-red ml-1">(*)</span></label>
+											<input required data-field="endDate" data-provide="datepicker"
+												name="endDate" placeholder="End Plan Date" type="text"
+												class="form-control field-project__date field-project__end-date form-control__item">
+										</div>
+									</div>
+								</div>
+								<!-- rank & customerId -->
+								<div class="row">
+									<div class="col-md-6">
+										<div class="form-group">
+											<label>Customer<span class="text-red ml-1">(*)</span></label>
+											<select data-type="number" required data-field="customerId"
+												name="customerId"
+												class="form-control field-project__customer form-control__item"></select>
+										</div>
+									</div>
+									<div class="col-md-6">
+										<div class="form-group">
+											<label>Rank<span class="text-red ml-1">(*)</span></label>
+											<select data-type="string" required data-field="rank" name="rank"
+												class="form-control field-project__rank form-control__item"></select>
+										</div>
+									</div>
+								</div>
+								<!-- headCountSize && mmSize -->
+								<div class="row">
+									<div class="col-md-6">
+										<div class="form-group">
+											<label for="">HeadCount Project Size<span
+													class="text-red ml-1">(*)</span></label>
+											<input type="number" required data-field="headCountSize"
+												name="headCountSize"
+												class="field-project__head-count-size form-control form-control__item"
+												placeholder="HeadCount Project Size" value="">
+										</div>
+									</div>
+									<div class="col-md-6">
+										<div class="form-group">
+											<label for="">MM Project Size<span class="text-red ml-1">(*)</span></label>
+											<input type="number" required data-field="mmSize" name="mmSize"
+												class="field-project__mm-size form-control form-control__item"
+												placeholder="MM Project Size" value="">
+										</div>
+									</div>
+								</div>
+								<!-- PM & QA -->
+								<div class="row">
+									<div class="col-md-6">
+										<div class="form-group">
+											<label for="">PM<span class="text-red ml-1">(*)</span></label>
+											<select data-type="number" required data-field="pmId" name="pmId"
+												class="field-project__pm field-project__user form-control form-control__item"></select>
+										</div>
+									</div>
+									<div class="col-md-6">
+										<div class="form-group">
+											<label for="">QA</label>
+											<select data-field="qaId" name="qaId"
+												class="field-project__qa field-project__user form-control form-control__item"></select>
+										</div>
+									</div>
+								</div>
+								<!-- overview -->
+								<div class="row">
+									<div class="col-md-12">
+										<div class="form-group">
+											<label for="">Overview</label>
+											<textarea rows="5" data-field="overview" name="overview"
+												class="field-project__overview form-control form-control__item"
+												placeholder="Overview"></textarea>
+										</div>
+									</div>
+								</div>
+								<!-- Note -->
+								<div class="row">
+									<div class="col-md-12">
+										<div class="form-group">
+											<label for="">Note</label>
+											<textarea rows="5" data-field="note" name="note"
+												class="field-project__note form-control form-control__item"
+												placeholder="Note"></textarea>
+										</div>
+									</div>
+								</div>
+								<div class="text-right">
+									<button type="button"
+										class="btnConvertOpportunity btn btn-primary mr-5">Update</button>
+									<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+
+</html>

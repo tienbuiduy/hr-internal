@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{index}">
+
+<head>
+	<link rel="stylesheet" type="text/css" media="all" th:href="@{/css/mainpage/allocations.css}" />
+</head>
+
+<body>
+	<th:block layout:fragment="scripts">
+		<script type="text/javascript" src="/js/handle-view-employee.js"></script>
+		<script type="text/javascript" src="/js/mainpage/allocations.js"></script>
+		<script type="text/javascript" src="/js/handle-view-project.js"></script>
+	</th:block>
+
+	<div layout:fragment="main-right" class="main-right">
+		<div class="box">
+			<div class="main-top-content">
+				<div class="title-page">
+					<h3 class="main-page-title">
+						<span>Allocation Management</span>
+						<i class="glyphicon glyphicon-plus hover-pointer ml-5" id="addAllocation" th:if="${#lists.contains(user_role, 'DM') || #lists.contains(user_role, 'PMO') || #lists.contains(user_role, 'PM')}"></i>
+					</h3>
+				</div>
+			</div>
+			<div class="middle-content">
+				<div class="search-form form-search-lesson-learns mb-5 mt-5">
+					<div class="row">
+						<form class="form-horizontal">
+							<div class="col-md-12">
+								<div class="col-md-3">
+									<div class="form-group">
+										<label class="control-label col-sm-4" for="projectName">Project Name</label>
+										<div class="col-sm-8">
+											<input type="text" class="form-control form-control__item field-search" id="projectName"
+												data-field="projectName" placeholder="Project Name">
+										</div>
+									</div>
+								</div>
+								<div class="col-md-3">
+									<div class="form-group">
+										<label class="control-label col-sm-4" for="employeeName">Employee</label>
+										<div class="col-sm-8">
+											<input type="text" class="form-control form-control__item field-search" id="employeeName"
+												data-field="employeeName" placeholder="Employee Name">
+										</div>
+									</div>
+								</div>
+								<div class="col-md-3">
+									<div class="form-group">
+										<label class="control-label col-sm-4" for="pmName">PM</label>
+										<div class="col-sm-8">
+											<input type="text" class="form-control form-control__item field-search" id="pmName"
+												   data-field="pmName" placeholder="PM Name">
+										</div>
+									</div>
+								</div>
+								<div class="col-md-3">
+									<div class="form-group">
+										<label class="control-label col-sm-4" for="startRate">Rate</label>
+										<span>
+											<div class="col-sm-3 rate">
+												<input input min="0" max="100" step="0.01" type="number"
+													   class="form-control form-control__item field-search" id="startRate"
+													   data-field="startRate" placeholder="From">
+											</div>
+										</span>
+										<span>
+											<div class="control-label col-sm-1">
+												-
+											</div>
+										</span>
+										<span>
+											<div class="col-sm-3 rate">
+												<input input min="0" max="100" step="0.01" type="number"
+													   class="form-control form-control__item field-search" id="endRate"
+													   data-field="endRate" placeholder="To">
+											</div>
+										</span>
+									</div>
+								</div>
+							</div>
+							<div class="col-md-12 mt-2">
+								<div class="col-md-3">
+									<div class="form-group">
+										<label class="control-label col-sm-4" for="fromStartDate">From Start
+											Date</label>
+										<div class="col-sm-8">
+											<div class="input-group date" data-provide="datepicker">
+												<input data-field="fromStartDate" id="fromStartDate" placeholder="From Start Date"
+													type="text" class="form-control form-control__item field-search">
+												<div class="input-group-addon">
+													<span class="glyphicon glyphicon-th"></span>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="col-md-3">
+									<div class="form-group">
+										<label class="control-label col-sm-4" for="toStartDate">To Start Date</label>
+										<div class="col-sm-8">
+											<div class="input-group date" data-provide="datepicker">
+												<input data-field="toStartDate" id="toStartDate" placeholder="To Start Date" type="text"
+													class="form-control form-control__item field-search">
+												<div class="input-group-addon">
+													<span class="glyphicon glyphicon-th"></span>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="col-md-3">
+									<div class="form-group">
+										<label class="control-label col-sm-4" for="fromEndDate">From End Date</label>
+										<div class="col-sm-8">
+											<div class="input-group date" data-provide="datepicker">
+												<input data-field="fromEndDate" id="fromEndDate" placeholder="From End Date" type="text"
+													class="form-control form-control__item field-search">
+												<div class="input-group-addon">
+													<span class="glyphicon glyphicon-th"></span>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="col-md-3">
+									<div class="form-group">
+										<label class="control-label col-sm-4" for="toEndDate">To End Date</label>
+										<div class="col-sm-8 end-date">
+											<div class="input-group date" data-provide="datepicker">
+												<input data-field="toEndDate" id="toEndDate" placeholder="To End Date" type="text"
+													class="form-control form-control__item field-search">
+												<div class="input-group-addon">
+													<span class="glyphicon glyphicon-th"></span>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="col-md-12 mt-2">
+								<div class="col-md-12">
+									<div class="form-group">
+										<label class="control-label col-sm-1" for="">Position</label>
+										<div class="col-sm-11 form-control__item--roles"></div>
+									</div>
+								</div>
+							</div>
+							<div class="col-md-12 mt-2">
+								<div class="col-md-12">
+									<div class="form-group">
+										<label class="control-label col-sm-1" for="">Type</label>
+										<div class="col-sm-11 form-control__item--types"></div>
+									</div>
+								</div>
+							</div>
+							<div class="col-md-12 mt-3" th:if="${#lists.contains(user_role, 'DM') || #lists.contains(user_role, 'PMO') ||
+							#lists.contains(user_role, 'PM') || #lists.contains(user_role, 'DIR')}">
+								<span>
+									<div class="text-right">
+										<button class="btn btn-primary" type="button" id="btnSearchAllocation">Search</button>
+										<button class="btn btn-primary" type="button" id="btnViewImport">Import</button>
+										<button class="btn btn-primary" type="button" id="btnExportAllocation">Export</button>
+										<button class="btn btn-primary" type="button" id="btnViewExportEE">Export EE</button>
+										<button class="btn btn-primary" type="button" id="btnViewAllocation">View Allocation</button>
+										<button class="btn btn-primary" type="button" id="btnResetSearchAllocation">Reset</button>
+									</div>
+								</span>
+							</div>
+						</form>
+					</div>
+				</div>
+				<div>
+					<table id="tableAllocation" class="table table-responsive table-striped"></table>
+				</div>
+			</div>
+			<div class="modal fade in" id="modalActionAllocation" tabindex="-1" role="dialog" data-toggle="modal"
+				aria-hidden="false" data-backdrop="static">
+				<div class="modal-dialog" role="document">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h4 class="modal-title">Create Allocation</h4>
+							<i class="glyphicon glyphicon-remove close" data-dismiss="modal" aria-label="Close"></i>
+						</div>
+						<div class="modal-body" id="modal-body">
+							<form class="formActionAllocation">
+								<div class="form-group">
+								<label>Project</label>
+								<select data-field="projectId" name="projectId"
+										class="form-control field-allocation__item--select field-allocation__project form-control__item"></select>
+								</div>
+								<div class="form-group">
+									<label>Opportunity</label>
+									<select data-field="oppId" name="oppId"
+											class="form-control field-allocation__item--select field-allocation__opportunity form-control__item"></select>
+								</div>
+								<div class="form-group">
+									<label for="">Employee <span class="text-red ml-1">(*)</span></label>
+									<select required data-field="employeeId" name="employeeId"
+										class="form-control field-allocation__item--select field-allocation__employee form-control__item"></select>
+								</div>
+								<div class="form-group">
+									<label>Position <span class="text-red ml-1">(*)</span></label>
+									<select required data-field="roleId" name="roleId"
+										class="form-control field-allocation__item--select field-allocation__role form-control__item"></select>
+								</div>
+								<div class="form-group">
+									<label>Type <span class="text-red ml-1">(*)</span></label>
+									<select required data-field="type" name="type"
+											class="form-control field-allocation__item--select field-allocation__type form-control__item"></select>
+								</div>
+								<div class="form-group">
+									<label>Rate<span class="text-red ml-1">(*)</span></label>
+									<input min="0" max="100" type="number" step="0.01" required data-field="rate" name="rate"
+										class="field-allocation__rate form-control form-control__item"
+										placeholder="Rate" value="">
+								</div>
+								<div class="form-group">
+									<label>Allocation<span class="text-red ml-1">(*)</span></label>
+									<input min="0" max="100" type="number" required data-field="allo" name="allo"
+										class="field-allocation__allo form-control form-control__item"
+										placeholder="Allocation" value="">
+								</div>
+								<div class="form-group">
+									<label>Start Date <span class="text-red ml-1">(*)</span></label>
+									<input required data-field="startDate" data-provide="datepicker" name="startDate"
+										placeholder="Start Date" type="text"
+										class="form-control field-allocation__date field-allocation__start-date form-control__item">
+									<span id="endDate-error-minDate" class="text-red d-none" for="endDate">Start Date <=
+											End Date.</span>
+								</div>
+								<div class="form-group">
+									<label>End Date <span class="text-red ml-1">(*)</span></label>
+									<input required data-field="endDate" data-provide="datepicker" name="endDate"
+										placeholder="End Date" type="text"
+										class="form-control field-allocation__date field-allocation__end-date form-control__item">
+								</div>
+								<div class="form-group">
+									<label>Note</label>
+									<textarea rows="5" data-field="note" name="note"
+											  class="form-control field-allocation__note form-control__item"
+											  placeholder="Note"></textarea>
+								</div>
+								<div class="form-group">
+									<label>Source</label>
+									<input data-field="source" name="source"
+										   placeholder="Source" type="text"
+										   class="form-control field-allocation__source form-control__item">
+								</div>
+								<div class="text-right">
+									<button type="button" class="btnAddAllocation btn btn-primary mr-5" th:if="${#lists.contains(user_role, 'DM') || #lists.contains(user_role, 'PMO') || #lists.contains(user_role, 'PM')}">Save</button>
+									<button type="button" class="btnEditAllocation btn btn-primary mr-5" th:if="${#lists.contains(user_role, 'DM') || #lists.contains(user_role, 'PMO') || #lists.contains(user_role, 'PM')}">Update</button>
+									<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="modal fade in" id="modalExportAllocation" tabindex="-1" role="dialog" data-toggle="modal"
+				 aria-hidden="false" data-backdrop="static">
+				<div class="modal-dialog" role="document">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h4 class="modal-title">Export Allocation</h4>
+							<i class="glyphicon glyphicon-remove close" data-dismiss="modal" aria-label="Close"></i>
+						</div>
+						<div class="modal-body">
+							<button class="btn btn-primary" type="button"
+									id="btnExportAllocationByDay">Export By Day</button>
+							<button class="btn btn-primary" type="button"
+									id="btnExportAllocationByMonth">Export By Month</button>
+							<button class="btn btn-primary" type="button"
+									id="btnExportAllocationByPeriod">Export By Period</button>
+							<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="modal fade in" id="modal-export-ee" tabindex="-1" role="dialog" data-toggle="modal"
+				 aria-hidden="false" data-backdrop="static">
+				<div class="modal-dialog" role="document">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h4 class="modal-title">Export EE</h4>
+							<i class="glyphicon glyphicon-remove close" data-dismiss="modal" aria-label="Close"></i>
+						</div>
+						<div class="modal-body" id="modal-body-export-ee">
+							<form class="form-export-ee">
+								<div class="form-group">
+									<label>Project</label>
+									<select data-field="projectId" name="projectId"
+											class="form-control field-export-ee__item--select field-export-ee__project form-control__item"></select>
+								</div>
+								<div class="form-group">
+									<label>Start Date</label>
+									<input data-field="startDate" data-provide="datepicker" name="startDate"
+										   placeholder="Start Date" type="text"
+										   class="form-control field-export-ee__date field-export-ee__start-date form-control__item">
+									<span id="ee-endDate-error-minDate" class="text-red d-none" for="endDate">Start Date <=
+											End Date.</span>
+								</div>
+								<div class="form-group">
+									<label>End Date</span></label>
+									<input data-field="endDate" data-provide="datepicker" name="endDate"
+										   placeholder="End Date" type="text"
+										   class="form-control field-export-ee__date field-export-ee__end-date form-control__item">
+								</div>
+								<div class="form-group">
+									<label>Position</label>
+									<div class="form-control__item--roles"></div>
+								</div>
+								<div class="text-right">
+									<button type="button" class="btnExportEE btn btn-primary mr-5" th:if="${#lists.contains(user_role, 'DM') || #lists.contains(user_role, 'PMO') || #lists.contains(user_role, 'PM')}">Export</button>
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="modal fade in" id="modalViewAllocationDetail" tabindex="-1" role="dialog" data-toggle="modal"
+				aria-hidden="false" data-backdrop="static">
+				<div class="modal-dialog modal-xxl" role="document">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h4 class="modal-title">View Allocation</h4>
+							<i class="glyphicon glyphicon-remove close" data-dismiss="modal" aria-label="Close"></i>
+						</div>
+					</div>
+					<div class="modal-body" id="modal-body-view-allocation">
+						<div class="row">
+							<form class="form-horizontal">
+								<div class="col-md-12">
+									<div class="col-md-3 mt-3">
+										<label class="control-label col-sm-4" for="employeeName">Employee</label>
+										<div class="col-sm-8">
+											<input type="text" class="form-control form-control__item" id="employeeNamePopup" data-field="employeeName" placeholder="Employee Name">
+										</div>
+									</div>
+									<div class="col-md-3 mt-3">
+										<label class="control-label col-sm-4" for="projectName">Project</label>
+										<div class="col-sm-8">
+											<input type="text" class="form-control form-control__item" id="projectNamePopup" data-field="projectName" placeholder="Project Name">
+										</div>
+									</div>
+									<div class="col-md-3 mt-3">
+										<label class="control-label col-sm-4" for="startDate">Start Date</label>
+										<div class="input-group date col-sm-8" data-provide="datepicker">
+											<input placeholder="Start Date" type="text"
+												class="form-control form-control__date form-control__start-date">
+											<div class="input-group-addon">
+												<span class="glyphicon glyphicon-th"></span>
+											</div>
+										</div>
+									</div>
+									<div class="col-md-3 mt-3">
+										<label class="control-label col-sm-4" for="endDate">End Date</label>
+										<div class="input-group date col-sm-8" data-provide="datepicker">
+											<input placeholder="End Date" type="text"
+												class="form-control form-control__date form-control__end-date">
+											<div class="input-group-addon">
+												<span class="glyphicon glyphicon-th"></span>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="col-md-12 mt-2">
+									<div class="col-md-3 mt-3">
+										<label class="control-label col-sm-4" for="pmName">PM</label>
+										<div class="col-sm-8">
+											<input type="text" class="form-control form-control__item" id="pmNamePopup" data-field="pmName" placeholder="PM Name">
+										</div>
+									</div>
+								</div>
+								<div class="col-md-12 mt-2">
+									<div class="col-md-12">
+										<div class="form-group">
+											<label class="control-label col-sm-1" for="">Position</label>
+											<div class="col-sm-11 form-control__item--roles"></div>
+										</div>
+									</div>
+								</div>
+								<div class="col-md-12">
+									<div class="col-md-4 mt-3">
+										<div>
+											<input value="true" type="checkbox" data-type="number" class="form-control__item" id="btnCheckFreeEmployee">
+											<label for="btnCheckFreeEmployee">Free Employee</label>
+										</div>
+										<div>
+											<button class="btn btn-primary" type="button" id="btnViewAllocationDetail">View Allocation</button>
+										</div>
+									</div>
+								</div>
+							</form>
+						</div>
+						<div class="mt-5 pl-2 pr-2">
+							<table id="tableAllocationDetails" class="table table-responsive table-striped"></table>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="modal fade in" id="modalImport" tabindex="-1" role="dialog" data-toggle="modal"
+				 aria-hidden="false" data-backdrop="static">
+				<div class="modal-dialog" role="document">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h4 class="modal-title">Import</h4>
+							<i class="glyphicon glyphicon-remove close" data-dismiss="modal" aria-label="Close"></i>
+						</div>
+						<div class="modal-body" id="modal-body-import">
+							<form class="form-import">
+								<div class="form-group">
+									<input type="file" id="import-allocation" name="${_csrf.parameterName}" enctype="multipart/form-data" th:value="${_csrf.token}" style="display: none;">
+									<button class="btn btn-primary" type="button" onclick="document.getElementById('import-allocation').click();">Import </button>
+								</div>
+								<div class="form-group">
+									<input type="file" id="import-allocation-by-month" name="${_csrf.parameterName}" enctype="multipart/form-data" th:value="${_csrf.token}" style="display: none;">
+									<button class="btn btn-primary" type="button" onclick="document.getElementById('import-allocation-by-month').click();">Import By Month  </button>
+								</div>
+								<div class="form-group">
+								<input type="file" id="import-allocation-by-date" name="${_csrf.parameterName}" enctype="multipart/form-data" th:value="${_csrf.token}" style="display: none;">
+								<button class="btn btn-primary" type="button" onclick="document.getElementById('import-allocation-by-date').click();">Import By Day </button>
+							</div>
+								<div class="form-group">
+									<input type="file" id="import-allocation-by-period" name="${_csrf.parameterName}" enctype="multipart/form-data" th:value="${_csrf.token}" style="display: none;">
+									<button class="btn btn-primary" type="button" onclick="document.getElementById('import-allocation-by-period').click();">Import By Period </button>
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div th:insert="~{layout/common/actionProject :: actionProject}"></div>
+			<div th:insert="~{layout/common/actionEmployee :: actionEmployee}"></div>
+
+		</div>
+	</div>
+</body>
+
+</html>

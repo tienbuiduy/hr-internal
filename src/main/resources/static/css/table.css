@@ -1,0 +1,142 @@
+/* ===============================
+	COMMON TABLE
+=============================== */
+.table {
+	margin-bottom: 0px;
+}
+
+.table-wrapper {
+	position: relative;
+}
+
+.table-wrapper .table-freeze {
+	position: absolute;
+	top: 0;
+	pointer-events: none;
+}
+
+.table-wrapper .table-freeze th:not(.cell-freeze),
+.table-wrapper .table-freeze td:not(.cell-freeze) {
+	visibility: hidden;
+}
+
+.table-wrapper .table-freeze tr .cell-freeze {
+	pointer-events: initial;
+}
+
+.table-wrapper .table-freeze tr th.cell-freeze-left-last{
+	box-shadow: 4px 0 4px -2px rgba(255, 255, 255, 0.5);
+}
+
+.table-wrapper .table-freeze tr td.cell-freeze-left-last{
+	box-shadow: 4px 0 4px -2px rgba(0, 0, 0, 0.15);
+}
+
+.table-wrapper-scroll {
+	overflow-x: auto;
+}
+
+.table-wrapper .table-header {
+	background-color: #001529;
+	color: #fff;
+}
+
+.table-wrapper .table-header th {
+	vertical-align: top;
+	border: 1px solid #ddd;
+	white-space: nowrap;
+}
+
+.table-wrapper td {
+	border: 1px solid #ddd;
+	background-color: #fff;
+}
+
+.table-wrapper .table-header .table-column {
+	position: relative;
+	min-width: 50px;
+	padding-right: 20px;
+	-webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+       -moz-user-select: none; /* Old versions of Firefox */
+        -ms-user-select: none; /* Internet Explorer/Edge */
+            user-select: none;
+}
+
+.table-wrapper .table-header .column-action {
+	min-width: 50px;
+}
+
+.table-wrapper .cell-actions {
+	white-space: nowrap;
+}
+
+.table-wrapper .table-header .sorting {
+	width: 30px;
+	position: absolute;
+	top: 7px;
+	right: -15px;
+	bottom: 5px;
+}
+
+.table-wrapper .table-header .sorting i {
+	display: block;
+	font-size: 10px;
+	cursor: pointer;
+}
+
+.table-wrapper .table-header .sorting i.active {
+	color: #ff8000;
+}
+
+.limit-paging {
+	display: inline-block;
+	width: 72px;
+	border: 1px solid #ddd;
+	height: 36px;
+}
+
+.paging {
+	width: 100%;
+	text-align: right;
+	padding-right: 20px;
+	display: inline-block;
+	margin-top: 20px;
+}
+
+.paging .paging-list {
+	list-style: none;
+}
+
+.paging .paging-list .paging-item {
+	display: inline-block;
+	background: #fff;
+	vertical-align: middle;
+	width: 40px;
+	height: 35px;
+}
+
+.paging .paging-list .paging-item button {
+	background-color: #fff;
+	width: 40px;
+	height: 35px;
+	border: 1px solid #ddd;
+	cursor: pointer;
+}
+
+.paging .paging-list .paging-item.active button {
+	background-color: #001529;
+	color: #fff;
+}
+
+.display-total-item {
+	margin-left: 20px;
+	color : #555;
+	font-size: 14px
+}
+
+@media only screen and (max-width: 1080px) {
+	.table-wrapper .table-header .table-column {
+		min-width: 150px;
+	}
+}

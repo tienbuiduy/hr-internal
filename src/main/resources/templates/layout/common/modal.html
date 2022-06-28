@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<link rel="stylesheet" type="text/css" media="all" th:href="@{/css/modal.css}" />
+</head>
+<body>
+	<!-- <div th:fragment="modal" class="modal fade" id="commonModal" -->
+		<div th:fragment="modal" >
+			<div class="modal fade" id="commonModal"
+				tabindex="-1" role="dialog" aria-labelledby="commonModalLabel"
+				aria-hidden="true" data-backdrop="static">
+				<div class="modal-dialog" role="document">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h4 class="modal-title" id="commonModalLabel">Modal title</h4>
+							<i class="glyphicon glyphicon-remove close" data-dismiss="modal"
+								aria-label="Close"></i>
+						</div>
+						<div class="modal-body"></div>
+					</div>
+				</div>
+			</div>
+			<div class="modal fade in" id="dialog-common-confirm" tabindex="-1" role="dialog" data-toggle="modal"
+				aria-hidden="false" data-backdrop="static">
+				<div class="modal-dialog modal-dialog-centered" role="document">
+					<div class="modal-content modal-sm">
+						<div class="modal-header">
+							<h4 class="modal-title"></h4>
+							<i class="glyphicon glyphicon-remove close" data-dismiss="modal" aria-label="Close"></i>
+						</div>
+						<div class="modal-body">
+							<div class="message mb-3"></div>
+						</div>
+						<div class="modal-footer">
+							<div class="text-right">
+								<button type="button" class="btnConfirmOK btn-sm btn btn-primary mr-3">OK</button>
+								<button type="button" class="btn btn-sm btn-default" data-dismiss="modal">Cancel</button>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="modal fade in" id="dialog-common-message" tabindex="-1" role="dialog" data-toggle="modal"
+				aria-hidden="false" data-backdrop="static">
+				<div class="modal-dialog modal-dialog-centered" role="document">
+					<div class="modal-content modal-sm">
+						<div class="modal-header">
+							<h4 class="modal-title"></h4>
+							<i class="glyphicon glyphicon-remove close" data-dismiss="modal" aria-label="Close"></i>
+						</div>
+						<div class="modal-body" id = "modal-body">
+							<div class="message mb-3"></div>
+						</div>
+						<div class="modal-footer">
+							<div class="text-right">
+								<button type="button" class="btn btn-sm btn-default" data-dismiss="modal">Close</button>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+	</div>
+</body>
+</html>

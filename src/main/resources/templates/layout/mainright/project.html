@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{index}">
+
+<body>
+	<th:block layout:fragment="scripts">
+		<script type="text/javascript" src="/js/mainpage/project.js"></script>
+		<script type="text/javascript" src="/js/handle-view-project.js"></script>
+	</th:block>
+
+	<div layout:fragment="main-right" class="main-right">
+		<div class="box">
+			<div class="main-top-content">
+				<div class="title-page">
+					<h3 class="main-page-title">
+						<span>Project Management</span>
+						<i class="glyphicon glyphicon-plus hover-pointer ml-5" id="btnAddProject" th:if="${#lists.contains(user_role, 'DM') || #lists.contains(user_role, 'PMO') || #lists.contains(user_role, 'PM')}"></i>
+					</h3>
+				</div>
+			</div>
+			<div class="middle-content">
+				<div class="search-form form-search-project mb-5 mt-5">
+					<div class="row">
+						<form class="form-horizontal">
+							<div class="col-md-12">
+								<div class="col-md-3">
+									<div class="form-group">
+										<label class="control-label col-sm-4" for="projectName">Project Name</label>
+										<div class="col-sm-8">
+											<input type="text" class="form-control form-control__item field-search" id="projectName"
+												data-field="projectName" placeholder="Project Name">
+										</div>
+									</div>
+								</div>
+								<div class="col-md-3">
+									<div class="form-group">
+										<label class="control-label col-sm-4" for="contractTypeId">Contract Type</label>
+										<div class="col-sm-8">
+											<select data-type="number" data-field="contractTypeId" id="contractTypeId"
+												class="form-control form-search-user form-control__item form-search-control__contract-type field-search">
+												<option value="">-- Select --</option>
+											</select>
+										</div>
+									</div>
+								</div>
+								<div class="col-md-3">
+									<div class="form-group">
+										<label class="control-label col-sm-4" for="rankId">Rank</label>
+										<div class="col-sm-8">
+											<select data-type="string" data-field="rankId" id="rankId"
+												class="form-control form-control__item form-search-control__rank field-search">
+												<option value="">-- Select --</option>
+											</select>
+										</div>
+									</div>
+								</div>
+								<div class="col-md-3">
+									<div class="form-group">
+										<label class="control-label col-sm-4" for="customerId">Customer</label>
+										<div class="col-sm-8">
+											<select data-type="number" data-field="customerId" id="customerId"
+												class="form-control form-control__item form-search-control__customer field-search" name="customer">
+												<option value="">-- Select --</option>
+											</select>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="col-md-12 mt-2">
+								<div class="col-md-3">
+									<div class="form-group">
+										<label class="control-label col-sm-4" for="pmId">PM</label>
+										<div class="col-sm-8">
+											<select data-type="number" data-field="pmId" id="pmId"
+												class="form-control form-search-user form-control__item form-search-control__pm field-search" name="pm">
+												<option value="">-- Select --</option>
+											</select>
+										</div>
+									</div>
+								</div>
+								<div class="col-md-3">
+									<div class="form-group">
+										<label class="control-label col-sm-4" for="status">Status</label>
+										<div class="col-sm-8">
+											<select data-type="string" data-field="status" id="status"
+													class="form-control form-search-user form-control__item form-search-control__status field-search">
+												<option value="">-- Select --</option>
+											</select>
+										</div>
+									</div>
+								</div>
+								<div class="col-md-3">
+									<div class="form-group">
+										<label class="control-label col-sm-4" for="technicalSkill">Technical Skill</label>
+										<div class="col-sm-8">
+											<input type="text" class="form-control form-control__item field-search" id="technicalSkill"
+												   data-field="technicalSkill" placeholder="Technical Skill">
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="col-md-12 mt-3">
+								<div class="text-right">
+									<span>
+										<button class="btn btn-primary" type="button" id="btnSearchEmployee">Search</button>
+									</span>
+									<span>
+										<button class="btn btn-primary" type="button" id="btnResetProject">Reset</button>
+									</span>
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+				<div>
+					<table id="tableProject" class="table table-responsive table-striped"></table>
+				</div>
+			</div>
+			<div class="modal fade in" id="modalActionProject" tabindex="-1" role="dialog" data-toggle="modal"
+				aria-hidden="false" data-backdrop="static">
+				<div class="modal-dialog modal-lg" role="document">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h4 class="modal-title">Create Project</h4>
+							<i class="glyphicon glyphicon-remove close" data-dismiss="modal" aria-label="Close"></i>
+						</div>
+						<div class="modal-body" id="modal-body">
+							<form class="formActionProject">
+								<div class="row">
+									<div class="col-md-12">
+										<div class="form-group">
+											<label>Project Name <span class="text-red ml-1">(*)</span></label>
+											<input type="text" required data-field="projectName"
+												class="field-project__project-name form-control form-control__item"
+												name="projectName" placeholder="Project Name" value="">
+										</div>
+									</div>
+								</div>
+								<!-- projectName & renewContract -->
+								<div class="row">
+									<div class="col-md-6">
+										<div class="form-group">
+											<label>Contract Type<span class="text-red ml-1">(*)</span></label>
+											<select required data-type="number" data-field="contractTypeId"
+												name="contractTypeId"
+												class="form-control field-project__contract-type form-control__item"></select>
+										</div>
+									</div>
+									<div class="col-md-6">
+										<div class="form-group">
+											<label>Renew contract</label>
+											<input data-field="renewContract" data-provide="datepicker"
+												name="renewContract" placeholder="Renew contract" type="text"
+												class="form-control field-project__date field-project__renew-contract form-control__item">
+										</div>
+									</div>
+								</div>
+								<!-- startDate & endDate -->
+								<div class="row">
+									<div class="col-md-6">
+										<div class="form-group">
+											<label>Start Plan Date<span class="text-red ml-1">(*)</span></label>
+											<input required data-field="startDate" data-provide="datepicker"
+												name="startDate" placeholder="Start Plan Date" type="text"
+												class="form-control field-project__date field-project__start-date form-control__item">
+											<span id="startDate-error-minDate" class="text-red d-none"
+												for="startDate">Start Plan Date > End Plan Date.</span>
+										</div>
+									</div>
+									<div class="col-md-6">
+										<div class="form-group">
+											<label>End Plan Date <span class="text-red ml-1">(*)</span></label>
+											<input required data-field="endDate" data-provide="datepicker"
+												name="endDate" placeholder="End Plan Date" type="text"
+												class="form-control field-project__date field-project__end-date form-control__item">
+										</div>
+									</div>
+								</div>
+								<!-- rank & customerId -->
+								<div class="row">
+									<div class="col-md-6">
+										<div class="form-group">
+											<label>Customer<span class="text-red ml-1">(*)</span></label>
+											<select data-type="number" required data-field="customerId"
+												name="customerId"
+												class="form-control field-project__customer form-control__item"></select>
+										</div>
+									</div>
+									<div class="col-md-6">
+										<div class="form-group">
+											<label>Rank<span class="text-red ml-1">(*)</span></label>
+											<select data-type="string" required data-field="rank" name="rank"
+												class="form-control field-project__rank form-control__item"></select>
+										</div>
+									</div>
+								</div>
+								<!-- headCountSize && mmSize -->
+								<div class="row">
+									<div class="col-md-6">
+										<div class="form-group">
+											<label for="">Headcount Project Size<span
+													class="text-red ml-1">(*)</span></label>
+											<input type="number" required data-field="headCountSize"
+												name="headCountSize"
+												class="field-project__head-count-size form-control form-control__item"
+												placeholder="HeadCount Project Size" value="">
+										</div>
+									</div>
+									<div class="col-md-6">
+										<div class="form-group">
+											<label for="">MM Project Size<span class="text-red ml-1">(*)</span></label>
+											<input type="number" required data-field="mmSize" name="mmSize"
+												class="field-project__mm-size form-control form-control__item"
+												placeholder="MM Project Size" value="">
+										</div>
+									</div>
+								</div>
+								<!-- PM & QA -->
+								<div class="row">
+									<div class="col-md-6">
+										<div class="form-group">
+											<label for="">PM<span class="text-red ml-1">(*)</span></label>
+											<select data-type="number" required data-field="pmId" name="pmId"
+												class="field-project__pm field-project__user form-control form-control__item"></select>
+										</div>
+									</div>
+									<div class="col-md-6">
+										<div class="form-group">
+											<label for="">QA</label>
+											<select data-field="qaId" name="qaId"
+												class="field-project__qa field-project__user form-control form-control__item"></select>
+										</div>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-md-6">
+										<div class="form-group">
+											<label for="">Status<span class="text-red ml-1">(*)</span></label>
+											<select data-type="string" required data-field="status" name="status"
+													class="field-project__status form-control form-control__item"></select>
+										</div>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-md-12">
+										<div class="form-group">
+											<label for="">Technical Skill</label>
+											<textarea rows="5" data-field="technicalSkill" name="technicalSkill"
+												class="field-project__technicalSkill form-control form-control__item"
+												placeholder="Technical Skill"></textarea>
+										</div>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-md-12">
+										<div class="form-group">
+											<label for="">Overview</label>
+											<textarea rows="5" data-field="overview" name="overview"
+													  class="field-project__overview form-control form-control__item"
+													  placeholder="Overview"></textarea>
+										</div>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-md-12">
+										<div class="form-group">
+											<label for="">Note</label>
+											<textarea rows="5" data-field="note" name="note"
+												class="field-project__note form-control form-control__item"
+												placeholder="Note"></textarea>
+										</div>
+									</div>
+								</div>
+								<div class="text-right">
+									<button type="button" class="btnAddProject btn btn-primary mr-5" th:if="${#lists.contains(user_role, 'DM') || #lists.contains(user_role, 'PMO')  || #lists.contains(user_role, 'PM')}">Save</button>
+									<button type="button" class="btnEditProject btn btn-primary mr-5" th:if="${#lists.contains(user_role, 'DM') || #lists.contains(user_role, 'PMO')  || #lists.contains(user_role, 'PM')}">Update</button>
+									<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div th:insert="~{layout/common/actionProject :: actionProject}"></div>
+		</div>
+	</div>
+</body>
+
+</html>

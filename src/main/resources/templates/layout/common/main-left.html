@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+	<div th:fragment="main-left" class="main-left">
+		<div class="account-info hover-pointer" >
+			<img th:src="${googleUser.pictureUrl}" />
+			<span th:text="${googleUser.name}"></span>
+			<div class="logout">
+				<form th:action="@{/logout}" method="GET" th:id="form-logout" enctype="text/plain">
+					<input class="_csrf" name="${_csrf.parameterName}" th:id="btn-logout" th:value="${_csrf.token}" hidden="true">
+					<button type="submit" class="btn btn-default btn-logout">
+						<i class="glyphicon glyphicon-log-out" aria-hidden="true"></i>
+					</button>
+				</form>
+			</div>
+		</div>
+		<div id="menu-left" class="menu-dashboard">
+			<ul>
+
+			</ul>
+		</div>
+	</div>
+</body>
+</html>
+

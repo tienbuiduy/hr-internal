@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+<head>
+	<title>NS3-Internal</title>
+
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="_csrf" content="${_csrf.token}" />
+
+	<link rel="stylesheet" type="text/css" media="all" th:href="@{/css/jquery-ui.min.css}" />
+	<link rel="stylesheet" type="text/css" media="all" th:href="@{/css/bootstrap.min.css}" />
+	<link rel="stylesheet" type="text/css" media="all" th:href="@{/css/table.css}" />
+	<link rel="stylesheet" type="text/css" media="all" th:href="@{/css/common.css}" />
+	<link rel="stylesheet" type="text/css" media="all" th:href="@{/css/bootstrap-datepicker3.min.css}" />
+	<link rel="stylesheet" type="text/css" media="all" th:href="@{/css/mainright.css}" />
+</head>
+
+<body>
+	<div th:insert="~{layout/common/header :: nav}"></div>
+	<div>
+		<div th:replace="~{layout/common/main-left :: main-left}"></div>
+		<div th:if="${is_role}">
+			<th:block layout:fragment="main-right" />
+		</div>
+		<div th:if="${!is_role}">
+			<div th:replace="~{layout/mainright/forbidden :: forbidden}"></div>
+		</div>
+	</div>
+	</main>
+	<div th:replace="~{layout/common/footer :: copyRight}"></div>
+	<div th:insert="~{layout/common/modal :: modal}"></div>
+
+	<script type="text/javascript" th:src="@{/js/jquery.min.js}"></script>
+	<script type="text/javascript" th:src="@{/js/jquery-modal.js}"></script>
+	<script type="text/javascript" th:src="@{/js/jquery.validate.min.js}"></script>
+	<script type="text/javascript" th:src="@{/js/jquery-ui.min.js}"></script>
+	<script type="text/javascript" th:src="@{/js/bootstrap-datepicker.min.js}"></script>
+	<script type="text/javascript" th:src="@{/js/bootstrap.min.js}"></script>
+	<script type="text/javascript" th:src="@{/js/moment.min.js}"></script>
+	<script type="text/javascript" th:src="@{/js/common.js}"></script>
+	<script type="text/javascript" th:src="@{/js/jquery-table.js}"></script>
+	<script type="text/javascript" th:src="@{/js/mainpage/main.js}"></script>
+
+	<th:block layout:fragment="scripts" />
+</body>
+
+</html>

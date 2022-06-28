@@ -1,0 +1,23 @@
+.rate{
+    padding-left: 0;
+    padding-right: 0;
+}
+.end-date{
+    padding-left: 0;
+    padding-right: 0;
+}
+#import-allocation{
+    float: right;
+}
+/*#dialog-common-message{*/
+/*    width: 600px;*/
+/*}*/
+/*#modal-body{*/
+/*    width: 500px;*/
+/*}*/
+.modal-sm{
+    width: 800px;
+}
+.message{
+    white-space: break-spaces;
+}

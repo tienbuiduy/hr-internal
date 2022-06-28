@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+
+<div th:fragment="actionEmployee" class="modal fade in" id="modalActionEmployee" tabindex="-1" role="dialog" data-toggle="modal"
+     aria-hidden="false" data-backdrop="static" name="${_csrf.parameterName}" value="${_csrf.token}" >
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Create Employee</h4>
+                <i class="glyphicon glyphicon-remove close" data-dismiss="modal" aria-label="Close"></i>
+            </div>
+            <div class="modal-body" id="modal-body-Employee">
+                <form class="formActionEmployee">
+                    <div class="form-group">
+                        <label for="">Employee Code</label>
+                        <input type="text" data-field="employeeCode"
+                               class="form-control field-employee__employee-code form-control__item"
+                               placeholder="Employee Code" disabled>
+                    </div>
+                    <div class="form-group">
+                        <label>Employee Name <span class="text-red ml-1">(*)</span></label>
+                        <input type="text" required maxlength="200" data-field="employeeName"
+                               class="field-employee__employee-name form-control form-control__item"
+                               name="employeeName" placeholder="Employee Name" value="">
+                    </div>
+                    <div class="form-group">
+                        <label>Position <span class="text-red ml-1">(*)</span></label>
+                        <div class="form-control__roles"></div>
+                        <label for="" class="form-control__roles-error text-red font-weight-normal mt-1">Please
+                            enter Position.</label>
+                    </div>
+                    <div class="form-group">
+                        <label for="">Email <span class="text-red ml-1">(*)</span></label>
+                        <input type="email" required data-field="email" name="email"
+                               class="field-employee__email form-control form-control__item"
+                               placeholder="Email" value="">
+                    </div>
+                    <div class="form-group">
+                        <label for="">Department</label>
+                        <input data-field="department" name="department"
+                               class="field-employee__department form-control form-control__item"
+                               placeholder="Department" value="">
+                    </div>
+                    <div class="form-group">
+                        <label>Working Day</label>
+                        <input data-field="workingDay" data-provide="datepicker"
+                               name="workingDay" placeholder="Working Day" type="text"
+                               class="form-control field-employee__date form-control__item">
+                    </div>
+                    <div class="form-group">
+                        <label for="">Note</label>
+                        <textarea rows="5" data-field="note"
+                                  class="field-employee__note form-control form-control__item"
+                                  placeholder="Note"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>Main Skill</label>
+                        <textarea rows="5" data-field="mainSkill" maxlength="200" name="mainSkill"
+                                  class="field-employee__main-skill form-control form-control__item"
+                                  placeholder="Main Skill"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>Status <span class="text-red ml-1">(*)</span></label>
+                        <div class="form-control__status"></div>
+                        <label for=""
+                               class="form-control__status-error text-red font-weight-normal mt-1">Please
+                            enter Status.</label>
+                    </div>
+                    <div class="form-group">
+                        <label>Group</label>
+                        <textarea rows="5" data-field="groupName" maxlength="200" name="groupName"
+                                  class="field-employee__group form-control form-control__item"
+                                  placeholder="Group"
+                        ></textarea>
+                    </div>
+                    <div class="text-right">
+                        <button type="button" class="btnAddEmployee btn btn-primary mr-5">Save</button>
+                        <button type="button" class="btnEditEmployee btn btn-primary mr-5" th:if="${#lists.contains(user_role, 'DM') ||
+									 #lists.contains(user_role, 'PMO') || #lists.contains(user_role, 'PM') || #lists.contains(user_role, 'HR')}" >Update</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
